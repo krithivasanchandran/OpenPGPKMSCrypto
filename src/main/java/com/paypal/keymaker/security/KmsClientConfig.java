@@ -16,7 +16,6 @@ import javax.net.ssl.SSLContext;
 import javax.net.ssl.SSLSession;
 import javax.net.ssl.TrustManagerFactory;
 
-import com.paypal.keymaker.security.exceptions.CryptoRuntimeException;
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.config.ClientConfig;
 import com.sun.jersey.api.client.config.DefaultClientConfig;
@@ -31,13 +30,13 @@ public class KmsClientConfig {
 	private static Object LOCK = new Object();
 	
 	/*
-	 * Keymaker Connection Timeout -- 30 seconds
+	 * Google KMS Connection Timeout -- 30 seconds
 	 */
 	
 	private final static String keymakerConnectionTimeout = "30000";
 	
 	/*
-	 * Keymaker ReadTimeout -- 50 seconds
+	 * Google KMS ReadTimeout -- 50 seconds
 	 */
 	
 	private final static String keymakerReadTimeout = "50000";
@@ -45,10 +44,10 @@ public class KmsClientConfig {
 	
 	private static void keymakerProperties() throws Exception {
 		
-		System.setProperty("keymaker.keystore.password",
-				"");
-		System.setProperty("keymaker.keystore",
-				"C:/Users/krichandran/Desktop/Mandatory/keymaker-qa.jks");
+		System.setProperty("googleKMS.keystore.password",
+				"your protected password");
+		System.setProperty("googleKMS.keystore",
+				"ProtectedJksFile.jks");
 	}
 
 	public static Client getClient() throws Exception {
@@ -65,15 +64,15 @@ public class KmsClientConfig {
 						Properties p = System.getProperties();
 
 						String keystorePassword = System
-								.getenv("keymaker.keystore.password");
+								.getenv("googleKMS.keystore.password");
 						if (keystorePassword == null) {
 							keystorePassword = System
-									.getProperty("keymaker.keystore.password");
+									.getProperty("googleKMS.keystore.password");
 						}
 
 						final KeyStore keyStore = KeyStore.getInstance("JKS");
 						String keystoreFilePath = System
-								.getProperty("keymaker.keystore");
+								.getProperty("googleKMS.keystore");
 						
 						System.out.println("Printing the path to the jks file " + keystoreFilePath);
 						
@@ -120,7 +119,7 @@ public class KmsClientConfig {
 								Level.SEVERE,
 								"Cannot initialize SSLContext to call KMS "
 										+ e.getMessage());
-						throw new CryptoRuntimeException(e);
+						throw new RuntimeException(e);
 					}
 				}
 			}
@@ -133,9 +132,9 @@ public class KmsClientConfig {
 					}
 				}, sc));
 		Client client = Client.create(config);
-		String connectTimeout = System.getProperty("keymaker.connect.timeout",
+		String connectTimeout = System.getProperty("googleKMS.connect.timeout",
 				keymakerConnectionTimeout);
-		String readTimeout = System.getProperty("keymaker.read.timeout",
+		String readTimeout = System.getProperty("googleKMS.read.timeout",
 				keymakerReadTimeout);
 
 		client.setConnectTimeout(Integer.parseInt(connectTimeout));
