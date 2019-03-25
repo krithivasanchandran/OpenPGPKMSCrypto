@@ -1,8 +1,8 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>EncryptionPOC</groupId>
-	<artifactId>EncryptionPOC</artifactId>
+	<groupId>GoogleKMS</groupId>
+	<artifactId>GoogleKMS</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>war</packaging>
 	<build>
@@ -31,7 +31,7 @@
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-databind</artifactId>
-			<version>2.9.7</version>
+			<version>2.9.8</version>
 		</dependency>
 		<dependency>
 			<groupId>javax.servlet</groupId>
@@ -53,45 +53,11 @@
 			<groupId>org.bouncycastle</groupId>
 			<version>1.60</version>
 		</dependency>
-
-
-
-		<dependency>
-			<groupId>com.paypal.platform.security</groupId>
-			<artifactId>keymaker-crypto-interfaces</artifactId>
-			<version>2.0.1-RELEASE</version>
-			<exclusions>
-				<exclusion>
-					<artifactId>bcpg-jdk15on</artifactId>
-					<groupId>org.bouncycastle</groupId>
-				</exclusion>
-				<exclusion>
-					<artifactId>bcpkix-jdk15on</artifactId>
-					<groupId>org.bouncycastle</groupId>
-				</exclusion>
-			</exclusions>
-		</dependency>
-		<dependency>
-			<groupId>com.ebayinc.platform.security</groupId>
-			<artifactId>ProtectedPkgCryptoAPIProvider-Impl</artifactId>
-			<version>2.2.0-RELEASE</version>
-			<exclusions>
-				<exclusion>
-					<artifactId>bcpg-jdk15on</artifactId>
-					<groupId>org.bouncycastle</groupId>
-				</exclusion>
-				<exclusion>
-					<artifactId>bcpkix-jdk15on</artifactId>
-					<groupId>org.bouncycastle</groupId>
-				</exclusion>
-			</exclusions>
-		</dependency>
 		<dependency>
 			<groupId>org.ow2.util</groupId>
 			<artifactId>util-log</artifactId>
 			<version>1.0.37</version>
 		</dependency>
-		<!-- https://mvnrepository.com/artifact/com.sun.jersey/jersey-server -->
 			<dependency>
 			<groupId>com.sun.jersey</groupId>
 			<artifactId>jersey-server</artifactId>
