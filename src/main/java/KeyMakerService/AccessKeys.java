@@ -24,19 +24,15 @@ import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.WebResource;
 
 /*
- * Fetching BootStrap Token : https://engineering.paypalcorp.com/confluence/display/PLATSEC/Fetching+
- *                            Bootstrap+Token+from+KeyMaker
+ * Fetching BootStrap Token : Bootstrap Token from KeyMaker (KMS or Google Cloud Key Management Service)
+ *                            256 or 512 character String - AES 256 Encoded.
  *                    
  * Note : The bootstrap keys rotate for every 30 minutes.
  *                            
- * Read All Keys : https://engineering.paypalcorp.com/confluence/display/PLATSEC/KeyMakerAPI+-+REST+API+Document
- * 					#KeyMakerAPI-RESTAPIDocument-ReadAllKeys
  * 
- * KeyMaker QA Endpoint : QA End point: keymaker-proxy-stage.ccg21.lvs.paypalinc.com:443
+ * KeyMaker QA Endpoint : QA End point: example.vcd.live.amazoninc.com:443
  * 
- * keymakerapi-vip.qa.paypal.com  -> QA Endpoint.
- * 
- * Keys Link :https://engineering.paypalcorp.com/keymaker/kmc/mykeys?app_name=finapp
+ * example.vcd.live.amazoninc.com.com  -> QA Endpoint.
  * 
  */
 
@@ -45,8 +41,8 @@ public class AccessKeys {
 	private final static Logger accesslogger = Logger
 			.getLogger(AccessKeys.class.getName());
 	private final static String enabled = "enabled";
-	private final static String keymakerQAEndpoint = "https://keymakerapi-vip.qa.paypal.com/kmsapi/v1/keyobject/all";
-	private final static String httpHeaderKeyMakerBootStrapKeys = "X-EBAY-APP-ID";
+	private final static String keymakerQAEndpoint = "https://yourKeymakerURL.com/keyobject/all";
+	private final static String httpHeaderKeyMakerBootStrapKeys = "HTTP-HEADER-SET-AS-CONTENT-TYPE";
 
 	public Map<String, String> accessKeyMakerKeys(String appname)
 			throws Exception {
@@ -57,7 +53,7 @@ public class AccessKeys {
 		try {
 
 			input = new FileInputStream(
-					"C:/Users/krichandran/workspace/EncryptionPOC/WebContent/keymaker.properties");
+					"yourlocalPath/keymaker.properties");
 
 			// Load the properties file
 			keymakerProperties.load(input);
@@ -83,7 +79,7 @@ public class AccessKeys {
 				try {
 					input.close();
 				} catch (IOException ex) {
-
+					
 					accesslogger.warning(ex.getMessage());
 					ex.getMessage();
 				}
@@ -95,7 +91,7 @@ public class AccessKeys {
 	public static void main(String[] args) throws Exception {
 		queryKeyMaker(
 				"",
-				"finapp");
+				"yourApplicationName");
 
 	}
 
@@ -111,8 +107,8 @@ public class AccessKeys {
 		/*
 		 * KeyMaker QA Endpoint Restful Service . Please make sure Bootstrap
 		 * keys generated from here
-		 * https://engineering.paypalcorp.com/keymaker/kmc/mykeys?app_name=
-		 * finapp is accessible , if else the keys rotate for every 30 minutes.
+		 * https://www.example.com/mykeys?app_name=
+		 * if else the keys rotate for every 30 minutes.
 		 * Get a new key if fails !!
 		 */
 
@@ -131,8 +127,13 @@ public class AccessKeys {
 
 		List<Nonkey> nonkey = jsonResponse.getNonkeys();
 
+		//Private Key - PGP 
 		String finapp_test_private = "";
+		
+		//Public Key - PGP
 		String finapp_test_public = "";
+		
+		//Public Password 
 		String finapp_test_pass = "";
 
 		for (Nonkey t : nonkey) {
@@ -164,15 +165,18 @@ public class AccessKeys {
 
 					System.out.println("The json response is ================"
 							+ "\n" + nKey.toString());
+					
+					// Response from the keymaker JWT Token
+					// Converting from byteArray to String (OR) String to byteArray
+					// Will lead to Key Tampering . Caution applied to not do that.
 
 					String base64EcodedKey = nKey.getEncodedKeyData();
 
-					// byte[] byteArray =
-					// Base64.decode(base64EcodedKey.getBytes());
+				        byte[] byteArray = Base64.decode(base64EcodedKey.getBytes());
 
 					// Converting byte[] to String
 
-					// String decodedSecretKey = new String(byteArray);
+					String decodedSecretKey = new String(byteArray);
 
 					String encodeformat = nKey.getEncodeFormat();
 					boolean isExportable = nKey.getExportableToApp();
@@ -182,7 +186,7 @@ public class AccessKeys {
 					String attributes = nKey.getAttributes();
 					String STATE = state;
 					int version = nKey.getVersion();
-					// String encodedKeyData = nKey.getEncodedKeyData();
+					String encodedKeyData = nKey.getEncodedKeyData();
 
 					keyMakerAPIResponse.put("encodeformat", encodeformat);
 					keyMakerAPIResponse.put("exportable", isExportable + "");
