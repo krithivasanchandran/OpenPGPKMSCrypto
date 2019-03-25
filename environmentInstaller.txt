@@ -1,0 +1,61 @@
+#!/bin/sh
+
+verifyTomcat(){
+ verify=`echo $CATALINA_HOME`
+ retvalue=""
+ if [[ "$verify" == "*/usr/share/apache-tomcat-?" || "$verify" == "*/opt/*/apache-tomcat-?" ]]; then
+        echo "Tomcat is already installed"
+        retvalue="true"
+ else
+        echo "Tomcat is not found in the directory.. Now installing Tomcat 7... !!"
+        retvalue="false"
+ fi
+
+tomcaturl="http://tomcat.apache.org/download-70.cgi"
+
+installTomcat(){
+wget $tomcaturl
+sudo tar zxpvf   /root/apache-tomcat-7.0.32.tar.gz -C /usr/share
+echo "Setting up CATALINA_HOME to /usr/share/apache-tomcat-7.0.32"
+CATALINA_HOME=/usr/share/apache-tomcat-7.0.32
+echo "tomcat can be started by navigating to /usr/share/apache-tomcat-7.0.32 directory"
+echo "Start tomcat using /bin/startup.sh"
+echo "Stop tomcat using /bin/stop.sh"
+}
+
+
+retvalue=$( verifyTomcat )
+if type -p java; then
+    echo found java executable in PATH
+    _java=java
+    if [ "$retvalue" == "true" ]
+    then
+      echo "Tomcat is installed"
+    else
+      installTomcat
+    fi
+elif [ -n "$JAVA_HOME" && -x "$JAVA_HOME/bin/java" ];  then
+    echo "found java executable in JAVA_HOME"
+    _java="$JAVA_HOME/bin/java"
+    if [ "$retvalue" == "true" ]
+    then
+       echo "Tomcat is installed"
+    else
+       installTomcat
+    fi
+else
+    echo "no java is found in the executable path"
+    echo "Please install Java 1.8 Version to continue running the keymaker PGP Encryption"
+fi
+
+if [[ "$_java" ]]; then
+    version=$("$_java" -version 2>&1 | awk -F '"' '/version/ {print $2}')
+    echo version "$version"
+    pinto="*1.8*"
+
+    if [[ "$version" == $pinto ]]; then
+        echo "Success Java 1.8 seems to be already installed"
+    else
+        echo "Please install Java version 1.8 as the currently installed java version is $version"
+    fi
+fi
