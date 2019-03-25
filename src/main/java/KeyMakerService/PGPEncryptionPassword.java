@@ -15,9 +15,9 @@ public class PGPEncryptionPassword {
 	public static Map<String, byte[]> pinto(String decodedSecretkey) throws Exception {
 		
 		
-		final String filePath = "C:/Users/krichandran/Desktop/kenanpathapplication.txt";
-		final String encryptedFilePath = "C:/Users/krichandran/Desktop/decodeOutput.txt";
-		final String userId = "fin_app_test1";
+		final String filePath = "C:/yourInputfilePath";
+		final String encryptedFilePath = "C:/EncryptedOutputFilePath";
+		final String userId = "user_name_v1";
 		
 		Map<String, byte[]> encodedBytes = new HashMap<String, byte[]>();
 
