@@ -14,8 +14,8 @@ public class PGPPrivateKeyDecryption {
 
 	public static Map<String, String> decryptPGP(String privateKey) throws Exception {
 
-		String filePath = "C:/Users/krichandran/Desktop/decodeOutput.txt";
-		String decryptedFilePath = "C:/Users/krichandran/Desktop/decryptedFile.txt";
+		String filePath = "C:/encryptedInputFilePath";
+		String decryptedFilePath = "C:/DecryptedOutputFilePath";
 		final String userId = "";
 
 		Map<String, String> encodedBytes = new HashMap<String, String>();
@@ -58,11 +58,12 @@ public class PGPPrivateKeyDecryption {
 
 		/*
 		 * Compares the contents of two files - LossLess enc/dec
+		 * Character Level File Contents Comparison
 		 */
 
 		IntegrityChecker integrityCheck = new IntegrityChecker();
 		boolean fileCompare = integrityCheck
-				.checkFileIntegritry("C:/Users/krichandran/Desktop/kenanpathapplication.txt", decryptedFilePath);
+				.checkFileIntegritry("C:/filePathDecryption", decryptedFilePath);
 
 		if (fileCompare) {
 
