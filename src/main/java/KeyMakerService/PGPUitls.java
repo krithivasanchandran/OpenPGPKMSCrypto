@@ -44,6 +44,7 @@ public class PGPUitls {
 	/**
 	 * Decrypt the passed in message stream
 	 * Decryption working without passphrase - Private key.
+	 * Decryption with Password Support - Provide the password in "Your Key Password" field.
 	 */
 
 	public static void decryptFile(InputStream in2, OutputStream out,
@@ -67,7 +68,7 @@ public class PGPUitls {
 		}
 
 		//
-		// find the secret key
+		// Find the Secret Key
 		//
 		Iterator<PGPPublicKeyEncryptedData> it = enc.getEncryptedDataObjects();
 
@@ -80,7 +81,7 @@ public class PGPUitls {
 			System.out.println(pbe.getKeyID());
 			PBESecretKeyDecryptor decryptor = new BcPBESecretKeyDecryptorBuilder(
 					new BcPGPDigestCalculatorProvider())
-							.build("".toCharArray());
+							.build("Your Key Password ".toCharArray());
 
 			sKey = pKey.extractPrivateKey(decryptor);
 
