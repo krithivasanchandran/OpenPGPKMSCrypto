@@ -17,7 +17,7 @@ import java.io.IOException;
  * https://cloud.google.com/kms/docs/reference/libraries#client-libraries-usage-java               *
  **************************************************************************************************/
 
-public class Quickstart {
+public class GoogleKMSAccessKeys {
 
   public static void main(String... args) throws Exception {
   
