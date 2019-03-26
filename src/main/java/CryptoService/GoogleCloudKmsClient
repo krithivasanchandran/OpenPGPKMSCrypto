@@ -1,0 +1,52 @@
+// Imports the Google Cloud client library
+
+import com.google.api.gax.core.CredentialsProvider;
+import com.google.api.gax.core.GoogleCredentialsProvider;
+import com.google.auth.Credentials;
+import com.google.cloud.kms.v1.KeyManagementServiceClient;
+import com.google.cloud.kms.v1.KeyManagementServiceClient.ListKeyRingsPagedResponse;
+import com.google.cloud.kms.v1.KeyManagementServiceSettings;
+import com.google.cloud.kms.v1.KeyRing;
+import com.google.cloud.kms.v1.LocationName;
+
+import java.io.IOException;
+
+/***************************************************************************************************
+ * Google Cloud KMS Client , the other client is for generics that could be used to access AWS KMS *
+ * More Info on the keymaker client Updates here :                                                 *
+ * https://cloud.google.com/kms/docs/reference/libraries#client-libraries-usage-java               *
+ **************************************************************************************************/
+
+public class Quickstart {
+
+  public static void main(String... args) throws Exception {
+  
+    // Unique Identifier for your project Id.
+    String projectId = args[0];
+    
+    // The location of the Key Rings
+    String location = args[1];
+
+    // Create the KeyManagementServiceClient using try-with-resources to manage client cleanup.
+    try (KeyManagementServiceClient client = KeyManagementServiceClient.create()) {
+
+      // The resource name of the location to search
+      String locationPath = LocationName.format(projectId, location);
+
+      // Make the RPC call
+      ListKeyRingsPagedResponse response = client.listKeyRings(locationPath);
+
+      private final StringBuilder keyRingDetials = new StringBuilder();
+      
+      // Iterate over all KeyRings (which may cause more result pages to be loaded automatically)
+      
+      for (KeyRing keyRing : response.iterateAll()) {
+        System.out.println("Found KeyRing: " + keyRing.getName());
+        keyRingDetails.append(keyRing.toString());
+      }
+      
+      System.out.println("Very Important : Please dont Print publicly in the console , Try to use base64 encoding and print the key 
+      in your console " + keyRingDetails.toString());
+    }
+  }
+}
