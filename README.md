@@ -52,7 +52,7 @@ Test the scenarios for lossless data encryption and decryption .
 
 ## How to Run
 
-- ![#f03c15](https://placehold.it/15/f03c15/000000?text=+) `git clone "urlPath"`
+- ![#f03c15](https://placehold.it/15/f03c15/000000?text=+) `git clone "https://github.com/krithivasanchandran/OpenPGPKMSCrypto.git"`
 - ![#f03c15](https://placehold.it/15/f03c15/000000?text=+) `Import into eclipse or Intellij workspace`
 - ![#f03c15](https://placehold.it/15/f03c15/000000?text=+) `Run mvn clean install`
 - ![#f03c15](https://placehold.it/15/f03c15/000000?text=+) `Target Folder should be generated`
