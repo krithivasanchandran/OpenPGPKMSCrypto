@@ -30,6 +30,12 @@ Application to improve the security of files transmitted over the network has to
 - ![#f03c15](https://placehold.it/15/f03c15/000000?text=+) `Operation Name - ENC => Encryption , DEC => Decryption - args[2]`
 - ![#f03c15](https://placehold.it/15/f03c15/000000?text=+) `Absolute Path File Name - eg. C:/Users/sampleDir/file_sample_input.txt - for the encryption/decryption file utility. - args[3]`
 
+## Bouncy Castle Arguments :
+
+- ![#f03c15](https://placehold.it/15/f03c15/000000?text=+) `Input Text File - To be sent for encryption`
+- ![#f03c15](https://placehold.it/15/f03c15/000000?text=+) `Encrypted Output Text File - Absolute Path should be specified`
+- ![#f03c15](https://placehold.it/15/f03c15/000000?text=+) `Decrypted Output Text File - Absolute Path should be specified`
+
 # Architecture
 
 ![alt text](https://github.com/krithivasanchandran/OpenPGPKMSCrypto/blob/master/architecture.png)
